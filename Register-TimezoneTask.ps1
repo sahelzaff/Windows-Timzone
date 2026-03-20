@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Registers the TimezoneRemediation Scheduled Task for Medpace.
+    Registers the TimezoneRemediation Scheduled Task for Scripts.
 
 .DESCRIPTION
     This script:
     1. Registers the "TimezoneRemediation" event log source
     2. Creates C:\ProgramData\TimezoneRemediation\ and copies Fix-Timezone.ps1 there
-    3. Registers a Scheduled Task under \Medpace\ that triggers on every
+    3. Registers a Scheduled Task under \Scripts\ that triggers on every
        timezone change event (Event ID 1, Microsoft-Windows-Kernel-General)
     4. Task runs as SYSTEM with highest privileges, hidden from the UI
 
@@ -20,7 +20,7 @@
     PowerShell: 5.1 (Windows PowerShell)
     Dependencies: Fix-Timezone.ps1 must be in the same directory as this script
 
-    Author:  Medpace IT
+    Author:  Scripts IT
     Version: 2.0
     Date:    2026-03-20
 
@@ -29,7 +29,7 @@
     .\Register-TimezoneTask.ps1
 
     # To unregister and clean up:
-    Unregister-ScheduledTask -TaskPath '\Medpace\' -TaskName 'TimezoneRemediation' -Confirm:$false
+    Unregister-ScheduledTask -TaskPath '\Scripts\' -TaskName 'TimezoneRemediation' -Confirm:$false
     Remove-Item 'C:\ProgramData\TimezoneRemediation' -Recurse -Force
     Remove-EventLog -Source 'TimezoneRemediation'
 #>
@@ -41,7 +41,7 @@
 # ============================================================================
 
 $TaskName       = 'TimezoneRemediation'
-$TaskPath       = '\Medpace\'
+$TaskPath       = '\Scripts\'
 $DeployFolder   = 'C:\ProgramData\TimezoneRemediation'
 $ScriptFileName = 'Fix-Timezone.ps1'
 $EventLogSource = 'TimezoneRemediation'
@@ -52,7 +52,7 @@ $EventLogName   = 'Application'
 # ============================================================================
 
 Write-Host '========================================' -ForegroundColor Cyan
-Write-Host ' Medpace Timezone Remediation Installer' -ForegroundColor Cyan
+Write-Host ' Scripts Timezone Remediation Installer' -ForegroundColor Cyan
 Write-Host '========================================' -ForegroundColor Cyan
 Write-Host ''
 
@@ -249,15 +249,15 @@ Write-Host "2. CHECK THE EVENT LOG:" -ForegroundColor White
 Write-Host "   Get-EventLog -LogName Application -Source TimezoneRemediation -Newest 5" -ForegroundColor Gray
 Write-Host ""
 Write-Host "3. VERIFY TASK STATUS:" -ForegroundColor White
-Write-Host "   Get-ScheduledTask -TaskPath `"\Medpace\`" -TaskName `"TimezoneRemediation`"" -ForegroundColor Gray
-Write-Host "   Get-ScheduledTaskInfo -TaskPath `"\Medpace\`" -TaskName `"TimezoneRemediation`"" -ForegroundColor Gray
+Write-Host "   Get-ScheduledTask -TaskPath `"\Scripts\`" -TaskName `"TimezoneRemediation`"" -ForegroundColor Gray
+Write-Host "   Get-ScheduledTaskInfo -TaskPath `"\Scripts\`" -TaskName `"TimezoneRemediation`"" -ForegroundColor Gray
 Write-Host ""
 Write-Host "4. VIEW TASK IN TASK SCHEDULER UI:" -ForegroundColor White
-Write-Host "   taskschd.msc - navigate to Medpace folder" -ForegroundColor Gray
+Write-Host "   taskschd.msc - navigate to Scripts folder" -ForegroundColor Gray
 Write-Host "   (Task is hidden; toggle `"Show Hidden Tasks`" in View menu)" -ForegroundColor Gray
 Write-Host ""
 Write-Host "5. ROLLBACK / UNINSTALL (run as admin):" -ForegroundColor White
-Write-Host "   Unregister-ScheduledTask -TaskPath `"\Medpace\`" -TaskName `"TimezoneRemediation`" -Confirm:`$false" -ForegroundColor Gray
+Write-Host "   Unregister-ScheduledTask -TaskPath `"\Scripts\`" -TaskName `"TimezoneRemediation`" -Confirm:`$false" -ForegroundColor Gray
 Write-Host "   Remove-Item `"C:\ProgramData\TimezoneRemediation`" -Recurse -Force" -ForegroundColor Gray
 Write-Host "   Remove-EventLog -Source `"TimezoneRemediation`"" -ForegroundColor Gray
 Write-Host ""

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Universal Timezone Remediation Script for Medpace.
+    Universal Timezone Remediation Script for Scripts.
 
 .DESCRIPTION
     Detects if the system timezone has been incorrectly changed (caused by
@@ -26,7 +26,7 @@
     Dependencies: None (no third-party modules)
     API: ipinfo.io (free tier, no API key required)
 
-    Author:  Medpace IT
+    Author:  Scripts IT
     Version: 2.1
     Date:    2026-03-20
 #>

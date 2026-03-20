@@ -40,7 +40,7 @@ A two-script PowerShell solution that:
                         ▼
 ┌──────────────────────────────────────────────────────┐
 │              Scheduled Task (SYSTEM)                  │
-│  Task: \Medpace\TimezoneRemediation                   │
+│  Task: \Scripts\TimezoneRemediation                   │
 │  Trigger: Event ID 1 from Kernel-General              │
 │  Hidden, 2-min timeout, single instance               │
 └───────────────────────┬──────────────────────────────┘
@@ -93,7 +93,7 @@ A two-script PowerShell solution that:
 
 - Registers `TimezoneRemediation` as a Windows event log source
 - Creates `C:\ProgramData\TimezoneRemediation\` and copies `Fix-Timezone.ps1` there
-- Creates a hidden Scheduled Task under `\Medpace\` that:
+- Creates a hidden Scheduled Task under `\Scripts\` that:
   - Runs as **SYSTEM** with highest privileges
   - Triggers on **every timezone change** (Event ID 1)
   - Has a 2-minute execution time limit
@@ -131,11 +131,11 @@ Get-EventLog -LogName Application -Source TimezoneRemediation -Newest 5 | Format
 ### 4. Verify the Scheduled Task
 
 ```powershell
-Get-ScheduledTask -TaskPath "\Medpace\" -TaskName "TimezoneRemediation"
-Get-ScheduledTaskInfo -TaskPath "\Medpace\" -TaskName "TimezoneRemediation"
+Get-ScheduledTask -TaskPath "\Scripts\" -TaskName "TimezoneRemediation"
+Get-ScheduledTaskInfo -TaskPath "\Scripts\" -TaskName "TimezoneRemediation"
 
 # In Task Scheduler UI:
-# taskschd.msc → navigate to Medpace folder
+# taskschd.msc → navigate to Scripts folder
 # (Task is hidden; toggle "Show Hidden Tasks" in View menu)
 ```
 
@@ -143,7 +143,7 @@ Get-ScheduledTaskInfo -TaskPath "\Medpace\" -TaskName "TimezoneRemediation"
 
 ```powershell
 # Run as administrator
-Unregister-ScheduledTask -TaskPath "\Medpace\" -TaskName "TimezoneRemediation" -Confirm:$false
+Unregister-ScheduledTask -TaskPath "\Scripts\" -TaskName "TimezoneRemediation" -Confirm:$false
 Remove-Item "C:\ProgramData\TimezoneRemediation" -Recurse -Force
 Remove-EventLog -Source "TimezoneRemediation"
 ```
@@ -221,4 +221,4 @@ Both scripts are designed for Microsoft Intune deployment:
 
 ## License
 
-Internal use — Medpace IT.
+Internal use — Scripts IT.
